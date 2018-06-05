@@ -129,4 +129,37 @@ I plan on keeping the same layouts.app, but I will update it to my liking. Actua
 
 I now will do HTML Form check for this register Handler.
 
-I commited some html pattern/style in it (I know not the best practice to style in the html tag, but in this case it's quicker)
+I commited some html pattern/style in it (6/5/2018) (I know not the best practice to style in the html tag, but in this case it's quicker)
+
+I forgot to mentioned before, but I used a package for the phone verification, I followed this guide https://github.com/Propaganistas/Laravel-Phone
+
+so in RegisterController (database->migrations->users table)
+I put this for SQL to migrate...
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('fName',20);
+            $table->string('lName',32);
+            $table->string('userName',25);
+            $table->string('phone')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('admin',3)->default('no');
+            $table->string('master',3)->default('no');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+        
+ I want the master ranking of people to be able to assign people who can be admins.
+ Admins may delete posts as they please but they can not assign people to admins.
+ Masters may also delete. 
+ I may or may not get around to do this in time.
+ 
+ After fimbling around I totally forgot to update the User model, made me waste time...
+ 
+     protected $fillable = [
+        'fName', 'lName','userName', 'email', 'phone', 'password',
+    ];
+    
+commit for User verification (6/5/2018)
+
