@@ -163,3 +163,12 @@ I put this for SQL to migrate...
     
 commit for User verification (6/5/2018)
 
+Phone, emails. and user names are confirmed to be unique now... 
+Here is Homer Simpson trying to make an account with Bart's details (no idea who's phone is that !)
+
+![alttext](https://i.imgur.com/InsDH4m.png)
+
+### Moving on to the login page...
+
+
+
