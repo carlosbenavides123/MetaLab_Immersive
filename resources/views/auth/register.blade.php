@@ -105,6 +105,8 @@
                             </div>
                         </div>
 
+                        {{--Password--}}
+
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
@@ -122,6 +124,8 @@
                             </div>
                         </div>
 
+                        {{--Confirm Password--}}
+
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
@@ -130,6 +134,7 @@
                             </div>
                         </div>
 
+                        {{--Submit--}}
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -138,6 +143,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
