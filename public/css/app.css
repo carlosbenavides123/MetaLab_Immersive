@@ -10417,3 +10417,31 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.background-image{
+  background: url("../img/backgroundLogin.jpg") no-repeat center center fixed;
+
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#loginInput input{
+  background:transparent;
+  border:none;
+}
+
+#loginInput #forgot{
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+#loginCard card{
+  border: none;
+  border-color: transparent;
+}
+
+
+#loginCard{
+  top: 40%;
+}

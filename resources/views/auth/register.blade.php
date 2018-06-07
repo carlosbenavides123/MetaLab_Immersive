@@ -114,7 +114,6 @@
                                 <input style="min-width: 250px; max-width: 900px;" placeholder="Password12345" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
-                                    <p></p>
                                     <span class="invalid-feedback alert alert-danger">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
