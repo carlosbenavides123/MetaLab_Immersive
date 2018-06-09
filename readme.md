@@ -170,5 +170,11 @@ Here is Homer Simpson trying to make an account with Bart's details (no idea who
 
 ### Moving on to the login page...
 
+... I totally forgot to log this stuff...
+
+#### The content overview
+
+![alttext](https://i.imgur.com/8qKUKyX.png)
+
 
 
