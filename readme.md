@@ -170,5 +170,20 @@ Here is Homer Simpson trying to make an account with Bart's details (no idea who
 
 ### Moving on to the login page...
 
+... I totally forgot to log this stuff...
+
+#### The content overview
+
+![alttext](https://i.imgur.com/8qKUKyX.png)
+
+
+### Working on creating posts...
+
+In the Content/Overview page, I added a button that reads 'Create A Discussion'. 
+This button refers to '/posts/create'. Ok, so I went to PostsController@create and there I wrote return view ('posts.create').
+In views, I created a directory called posts, and inside I created a file called 'create.blade.php'...
+Ok good, I'm going to add Laravel Collectives....
+
+I can do this is normal HTML, but I think this way is good practice...
 
 
