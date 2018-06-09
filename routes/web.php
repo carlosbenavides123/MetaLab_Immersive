@@ -22,3 +22,5 @@ Route::get('/', function () {
 });
 
 Route::resource('contents','ContentsController');
+
+Route::resource('posts','PostsController');

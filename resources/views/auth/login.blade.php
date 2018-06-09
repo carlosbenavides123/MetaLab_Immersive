@@ -15,7 +15,8 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label style="color:#fff; font-size: 125%;" for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label style="color:#fff; font-size: 125%;" for="email" class="col-sm-4 col-form-label text-md-right"><span class="spanEmail">{{__('EMAIL')}}</span>
+                                <img src="img/login.png" id="person" alt=""></label>
 
                             <div class="col-md-6">
                                 <input style="border: 2px solid #fff;opacity: 0.6;" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
@@ -33,7 +34,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label style="color:#fff; font-size: 125%;" for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label id="labelPassword" style=" color:#fff; font-size: 125%;" for="password" class="col-md-4 col-form-label text-md-right"><span class="spanPassword">{{__('Password')}}</span> <img
+                                        src="img/key.png" id="key" alt=""></label>
 
                             <div class="col-md-6">
                                 <input style="border: 2px solid #fff;opacity: 0.6;" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>

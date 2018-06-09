@@ -10445,3 +10445,40 @@ a.text-dark:focus {
 #loginCard{
   top: 40%;
 }
+
+.background-image-reg{
+  background: #f3f3f3;
+}
+
+#labelPassword{
+  display: block;
+}
+.spanEmail{
+  visibility: hidden;
+}
+.spanPassword {
+  visibility: hidden;
+}
+@media (max-width: 768px)
+{
+
+  .spanEmail{
+    visibility: visible;-moz-backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+  .spanPassword{
+    visibility: visible;-moz-backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+  }
+  #person{
+    display: none;
+  }
+
+
+    #key{
+      display: none;
+    }
+
+}

@@ -1,10 +1,11 @@
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
 @extends('layouts.app')
 
 @section('content')
-
+    <body class="{{ Request::path() == 'register' ? 'background-image-reg' : '' }}"></body>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-8 col-lg-8">
             <div class="card">
                 <div class="card-header text-center" style="padding: 2.5% 5% 2.5% 5%; margin-bottom: 2.5%;">{{ __('Become a non-Redditor!') }}</div>
 
@@ -144,6 +145,22 @@
                         </div>
 
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" style="font-family: 'Righteous', cursive; font-size: medium">
+            <div class="card bg-faded" style="padding: 5% 5% 5% 5%">
+                <div class="card-block">
+                    <p><span>Better than StackOverFlow <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Reddit <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Facebook <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Twitter <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Myspace <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Something else <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than Youtube <img src="img/checkmark.png" alt=""></span> </p>
+                    <p><span>Better than School <img src="img/checkmark.png" alt=""></span> </p>
+
+
                 </div>
             </div>
         </div>
