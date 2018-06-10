@@ -488,4 +488,4 @@ For the file upload, it was weird because I had to look it up...
  
  ![alttext](https://i.imgur.com/MxVsPLQ.png)
  
- d
+ In the show.blade (in posts) i added a edit post (WIP) that checks if user is logged on? yes ok check if user->id == foreign key? yes ok a new button appears on sidebar that links to edit the post.. 
