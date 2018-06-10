@@ -489,3 +489,47 @@ For the file upload, it was weird because I had to look it up...
  ![alttext](https://i.imgur.com/MxVsPLQ.png)
  
  In the show.blade (in posts) i added a edit post (WIP) that checks if user is logged on? yes ok check if user->id == foreign key? yes ok a new button appears on sidebar that links to edit the post.. 
+ 
+ ##### 6/10
+ 
+ Ok so I forgot to add the option textbody, made a check if something is there, else do nothing..
+ 
+             @if($post->textArea != '')
+                        <p></p>
+                        <div class="float-left" style="font-weight: 400; font-size: 25px; margin-left: 4%;">
+                            {{$post->textArea}}
+                        </div>
+
+                        @endif
+                    <p></p>
+
+And in the ContentsController, for index I added a SQL requirement, to get all posts where isVisible, that is not deleted, will be visible to the user... this is @index
+
+        $posts = Post::all()->where('isVisible',1);
+        return view('content')->with('posts',$posts);
+    
+    
+Ok, now I want the user to see the option to edit his or her posts if they happen to be in the front page...
+
+In second thought, I think it will be preferable just to do this feature in the user settings... I don't want to check through every post for at @if userid == postUserId, I think that will be bad...
+
+So im updating the create post form, and i struggled A LOT, because laravel collective is dumb... I found out the way to get the value from user is to use old('html id') instead of '{{old('html id')}}'
+i.e.
+
+            {{Form::bsText('title', old('title'),['placeholder'=>'Title','required','pattern'=>'^[a-zA-Z0-9_ ]*$' ,'minlength'=>'2','style'=>'font-size:26px;']) }}
+
+
+Ok, I want to add a message in case of errors and I want the back end to have the same regex...
+
+back to PostsController@create
+
+So in create, I added these requirements, I only want english characters...
+
+        $this->validate($request,[
+            'title'=>'required|min:2|max:50|regex:/(^[A-Za-z0-9 ]+$)+/',
+            'description'=>'min:2|max:250|regex:/(^[A-Za-z0-9 ]+$)+/',
+            'image' =>'max:1999|image'
+        ]);
+        
+        
+
