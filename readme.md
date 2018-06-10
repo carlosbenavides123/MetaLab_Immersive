@@ -397,5 +397,95 @@ For the file upload, it was weird because I had to look it up...
  
  After struggling for a really long time, I realized I made a huge mistake, I realized making a relationship between the Content and Post was virtually useless and spent a lot of time debugging... there shouldn't be a relationship in this case at all...
  
+ # The cleaned up content page (overview)
  
-   
+ I added a temp pic, that will signify text if the user chooses not to upload an image...
+ 
+ ![alttext](https://i.imgur.com/46IoIA8.png)
+ 
+ Ok so i've done some front end changes... I made the useless sidebar into a somewhat useful sidebar. It tracks the posts the vote count for that post. I plan to make a User (parent) Post relationship... and comment I guess..
+ 
+ Here are the changes for show...
+ 
+     @extends('layouts.directoryApp')
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            max-height: 1000px;
+        }
+        body {
+            font-family: 'Raleway', sans-serif;
+        }
+
+        a:hover{
+            opacity: 0.8;
+        }
+    </style>
+
+    @section('content')
+
+        <div class="row">
+            <div class="col-md-8 col-sm-12" >
+
+
+                    <div class="card card-body" style="margin-left: 2.5%;">
+                        <div class="row" >
+
+                            <div style="display: inline-grid; margin: 0px 25px 0px 25px;">
+                                <span><img src="../img/upvote.png" alt=""></span>
+                                <span class="text-center">{{$post->votes}}</span>
+                                <span><img src="../img/downvote.png" style="font-size: 22px;" alt="Number"></span>
+                            </div>
+
+                            <div>
+                                <img src="/storage/pictures/{{$post->optionalPic}}" style="height: 120px;width: 100px; display: inline-block;margin-top: 2.5%;">
+                            </div>
+
+                            <div style="display: inline-block; margin-left: 15px;font-size: large;">
+                                <p style="position: absolute; font-size: x-large;">{{$post->title}}</p>
+                            </div>
+                        </div>
+
+                        @if($post->optionalPic != 'temp.jpg (2).png')
+                            <img class="center" src="/storage/pictures/{{$post->optionalPic}}"  alt="">
+                        @endif
+
+
+                    </div>
+
+
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card card-block bg-faded" style="margin-right: 2.5%;">
+                    <div class="container">
+                        <p></p>
+
+                        <a href="/posts/create" class="btn btn-primary" style="  margin:0 auto;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align : center;-moz-box-align    : center;-ms-flex-align    : center;-webkit-align-items : center;align-items : center ;justify-content : center;-webkit-justify-content : center;-webkit-box-pack : center;-moz-box-pack : center;-ms-flex-pack : center;">Create a new discussion!</a>
+
+                        <span><p style="margin-top: 2.5%;color:#8dacbb;"> This post was submitted in {{$post->created_at}}.
+                            @if($post->created_at != $post->updated_at)
+                                This post was then updated at {{$post->updated_at}}.
+                            @endif
+                        </p>
+                            </span>
+                        <span>
+                            <p style="font-weight: 700;">{{$post->votes}} points</p>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        @stop
+ 
+ ![alttext](https://i.imgur.com/MxVsPLQ.png)
+ 
+ 
