@@ -28,12 +28,16 @@
 @section('content')
 <title>Create A Discussion!</title>
 
-
+<span class="float-right" style="margin-right: 2.5%;"><a href="/contents" class="btn btn-primary btn-xs" >Go Back</a></span>
+<br>
+<br>
+<br>
     <div class="container">
 
         {!! Form::open(['action'=>'PostsController@store', 'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
 
         <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
+
             {{Form::bsText('title','',['placeholder'=>'Title','required','pattern'=>'^[a-zA-Z0-9]*$' ,'minlength'=>'2','style'=>'font-size:26px;' ]) }}
         </div>
 
@@ -53,6 +57,9 @@
             </label>
             <p id="filename"></p>
         </div>
+        <p></p>
+
+        {{Form::submit('Submit',['style'=>'width:100%; background:#6441a4;color:#fff;','class'=>'btn'])}}
 
 
 
