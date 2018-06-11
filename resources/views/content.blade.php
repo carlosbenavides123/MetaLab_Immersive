@@ -42,7 +42,8 @@
 
                         Crappy Sidebar 2
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aspernatur, dicta, dolores eaque eligendi error excepturi incidunt ipsa libero nostrum, obcaecati reiciendis suscipit ullam vel veritatis. Aspernatur at et fuga?</p>
-                        <a href="/posts/create" class="btn btn-primary" style=" margin:0 auto;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align : center;-moz-box-align    : center;-ms-flex-align    : center;-webkit-align-items : center;align-items : center ;justify-content : center;-webkit-justify-content : center;-webkit-box-pack : center;-moz-box-pack : center;-ms-flex-pack : center;">Create a new discussion!</a>
+
+                        <a href="/posts/create" class="btn btn-primary" style="  margin:0 auto;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align : center;-moz-box-align    : center;-ms-flex-align    : center;-webkit-align-items : center;align-items : center ;justify-content : center;-webkit-justify-content : center;-webkit-box-pack : center;-moz-box-pack : center;-ms-flex-pack : center;">Create a new discussion!</a>
 
                     </div>
 

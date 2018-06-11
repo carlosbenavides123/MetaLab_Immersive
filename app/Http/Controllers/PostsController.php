@@ -41,7 +41,8 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title'=>'required|min:2|max:200',
+            'title'=>'required|min:2|max:50|regex:/(^[A-Za-z0-9 ]+$)+/',
+            'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
             'image' =>'max:1999|image'
         ]);
 
@@ -58,6 +59,7 @@ class PostsController extends Controller
 
             $path = $request->file('image')->storeAs('public/pictures',$fileNameToStore);
         }
+
 
 
 
@@ -97,7 +99,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return 123;
     }
 
     /**

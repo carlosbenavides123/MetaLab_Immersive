@@ -25,10 +25,13 @@ Route::resource('contents','ContentsController');
 
 Route::resource('posts','PostsController');
 
-//Route::group(['middleware' => 'auth'], function() {
-//    Route::get('/posts/create','PostsController@create');
-//});
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/posts/create','PostsController@create');
+});
 
 Route::get('/test/createpost',function(){
     return view('test.createpost');
 });
+
+Route::resource('users','UserController');
+

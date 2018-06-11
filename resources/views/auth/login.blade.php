@@ -1,8 +1,8 @@
 @extends('layouts.altApp')
-
 @section('content')
 
     <body class="{{ Request::path() == 'login' ? 'background-image' : '' }}"></body>
+
 <div class="container bg-transparent">
 
     <div id="loginCard" class="row justify-content-center bg-transparent">
@@ -19,7 +19,7 @@
                                 <img src="img/login.png" id="person" alt=""></label>
 
                             <div class="col-md-6">
-                                <input style="border: 2px solid #fff;opacity: 0.6;" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input style="color:#fff; border: 2px solid #fff; opacity: 1.2;" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
 
                                 @if ($errors->has('email'))
@@ -38,7 +38,7 @@
                                         src="img/key.png" id="key" alt=""></label>
 
                             <div class="col-md-6">
-                                <input style="border: 2px solid #fff;opacity: 0.6;" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input style="color:#fff; border: 2px solid #fff;opacity: 1.2;" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
 
                                 @if ($errors->has('password'))

@@ -38,13 +38,23 @@
 
         <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
 
-            {{Form::bsText('title','',['placeholder'=>'Title','required','pattern'=>'^[a-zA-Z0-9]*$' ,'minlength'=>'2','style'=>'font-size:26px;' ]) }}
+            {{Form::bsText('title', old('title'),['placeholder'=>'Title','required','pattern'=>'^[a-zA-Z0-9_ ]*$','minlength'=>'2','style'=>'font-size:26px;']) }}
+            @if($errors->has('title'))
+                <div class="alert alert-danger">
+                    {{$errors->first('title')}}
+                </div>
+                @endif
         </div>
 
         <br>
 
         <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
-            {{Form::bsTextarea('description','',['placeholder'=>'Optional description','pattern'=>'^[a-zA-Z0-9]*$' ,'minlength'=>'2','style'=>'font-size:26px;' ]) }}
+            {{Form::bsTextarea('description',old('description'),['placeholder'=>'Optional description','pattern'=>'^[a-zA-Z0-9_ ]*$','style'=>'font-size:26px;' ]) }}
+            @if($errors->has('description'))
+                <div class="alert alert-danger">
+                    {{$errors->first('description')}}
+                </div>
+            @endif
         </div>
 
         <br>
@@ -53,6 +63,12 @@
             <label for="test">
                 <div class="text-center" style="font-size: large">Click or drop something here
                 {{Form::file('image')}}
+                    @if($errors->has('image'))
+                        <div class="alert alert-danger">
+                            {{$errors->first('image')}}
+                            idk how but something went wrong...
+                        </div>
+                    @endif
                 </div>
             </label>
             <p id="filename"></p>

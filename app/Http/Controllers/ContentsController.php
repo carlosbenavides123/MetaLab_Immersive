@@ -20,10 +20,7 @@ class ContentsController extends Controller
 
     public function index()
     {
-//        $user_id = auth()->user()->id;
-//        $user = User::find($user_id);
-//        return view('content')->with('user',$user);
-        $posts = Post::all();
+        $posts = Post::all()->where('isVisible',1);
         return view('content')->with('posts',$posts);
     }
 
@@ -91,4 +88,8 @@ class ContentsController extends Controller
     {
         //
     }
+
+
+
+
 }

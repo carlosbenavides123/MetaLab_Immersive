@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('optionalPic');
             $table->string('userName')->required();
             $table->string('title')->required();
-            $table->string('textArea');
+            $table->string('textArea')->nullable();
             $table->integer('votes')->default(0);
             $table->integer('isVisible')->default(1);
             $table->timestamps();
