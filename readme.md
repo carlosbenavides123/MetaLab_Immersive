@@ -571,7 +571,7 @@ lets get the id of it and return back a view, that is edit
 So put this logic in PostsController@edit
 
         $post = Post::find($id);
-        return view('posts.edit')->with('post',$post);
+        return view('posts.editPosts')->with('post',$post);
 
 find the id, which is given to use by clicking it... then lets go to the web page, but we have to create it.
 
@@ -579,5 +579,146 @@ In views->posts-> create a new file called editPosts.blade.php
 
 I don't want to put much styling in this so...
 
+So I just figured out how to fix the nav bar images, I didn't need to keep making a new layout.someApp, I just needed to update the style of the navbar in the current page. For example...
+
+Here is the skeleton for editPosts
+
+    @extends('layouts.directoryApp')
+
+    <style>
+        #exit {
+            content:url("../../img/exit.png")
+        }
+        #personal {
+            content:url("../../img/personalStats.png");
+        }
+    </style>
+    @section('content')
+
+
+        @stop
+
+I just added a id to the images and it pans out fine. 
+
+Alright lets add some basic style to the edit page...
+
+I updated the regex to allow !? as people use this more often than not...
+So the thing is, I will be prompting users to send the same picture again, otherwise it'll be removed...
+
+Here is the result of the edit page... 
+
+    @extends('layouts.directoryApp')
+    <link href="https://fonts.googleapis.com/css?family=Song+Myung" rel="stylesheet">
+
+    <style>
+        #exit {
+            content:url("../../img/exit.png")
+        }
+        #personal {
+            content:url("../../img/personalStats.png");
+        }
+
+        textarea{
+            width: 300px;
+            height: 150px;
+        }
+
+        input[type="file"]{
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        imag.dragover {
+            background-color: #aaa;
+        }
+
+        label{
+            font-weight: 500;
+            font-size: 25px;
+            font-family: 'Song Myung', serif;
+
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/postjs.js"></script>
+
+    @section('content')
+
+        <div class="container">
+            <div class="form form-control" style="padding: 2.5% 2.5% 2.5% 2.5%;">
+                <div>
+                <span><a href="../../posts/{{$post->id}}" class="btn btn-primary float-right"> Back</a></span>
+                </div>
+                <p></p>
+                <h4 class="text-center"> That old post sucked anyway...</h4>
+                <p></p><p></p>
+
+                {!! Form::open(['action' => ['PostsController@update',$post->id],'method'=>'POST', 'enctype'=>'multipart/form-data']) !!}
+                {{--{{Form::bsText('title', $post->title,['placeholder'=>'Title','required','pattern'=>'^[a-zA-Z0-9_ ]*$','minlength'=>'2','style'=>'font-size:26px;']) }}--}}
+                {{--@if($errors->has('title'))--}}
+                    {{--<div class="alert alert-danger">--}}
+                        {{--{{$errors->first('title')}}--}}
+                    {{--</div>--}}
+                {{--@endif--}}
+
+                <div class="form-group">
+                    {!! Form::label('title', 'Update the title of this post') !!}
+                    {!! Form::text('title', $post->title, ['class' => 'form-control', 'placeholder'=>'Title', 'required','pattern'=>'^[!?a-zA-Z0-9_ ]*$','minlength'=>'2','style'=>'font-size:26px;' ]) !!}
+
+                    @if($errors->has('title'))
+                    <div class="alert alert-danger">
+                    {{$errors->first('title')}}
+                    </div>
+                    @endif
+                </div>
+
+                <p></p>
+
+                <div class="form-group">
+                    {!! Form::label('description', 'Optional') !!}
+                    {!! Form::textarea('description', $post->textArea, ['class' => 'form-control','placeholder'=>'Optional description','pattern'=>'^[!?a-zA-Z0-9_ ]*$','style'=>'font-size:26px;']) !!}
+                    @if($errors->has('description'))
+                        <div class="alert alert-danger">
+                            {{$errors->first('description')}}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
+                    <label for="test">
+                        <div class="text-center" style="font-size: large">Please upload the same picture if you want to, otherwise the original will be deleted
+                            {{Form::file('image')}}
+                            @if($errors->has('image'))
+                                <div class="alert alert-danger">
+                                    {{$errors->first('image')}}
+                                    idk how but something went wrong...
+                                </div>
+                            @endif
+                        </div>
+                    </label>
+                    <p id="filename"></p>
+                </div>
+
+                {!! Form::hidden('_method','PUT') !!}
+
+                <p></p>
+                {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+
+            </div>
+        </div>
+
+
+        @stop
+
+if you couldn't compile it in you head...(lol)
+
+![alttext](https://i.imgur.com/jLkIcbb.png)
+
+so everything works, the postscontroller@update is BASICALLY the same as store, but we have to find that certain post first, then we update it, we DONT make a new post (Main difference!)
 
 
