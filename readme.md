@@ -563,4 +563,21 @@ my new migration file for posts is...
   New commit(6/10/2018)
   
   
+### The edit...
+
+so Navigate to PostsController@edit...
+lets get the id of it and return back a view, that is edit
+
+So put this logic in PostsController@edit
+
+        $post = Post::find($id);
+        return view('posts.edit')->with('post',$post);
+
+find the id, which is given to use by clicking it... then lets go to the web page, but we have to create it.
+
+In views->posts-> create a new file called editPosts.blade.php
+
+I don't want to put much styling in this so...
+
+
 
