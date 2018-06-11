@@ -99,7 +99,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return 123;
+        $post = Post::find($id);
+        return view('posts.editPosts')->with('post',$post);
     }
 
     /**
@@ -111,7 +112,39 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'title'=>'required|min:2|max:50|regex:/(^[?!A-Za-z0-9 ]+$)+/',
+            'description'=>'nullable|regex:/(^[!?A-Za-z0-9 ]+$)+/',
+            'image' =>'max:1999|image'
+        ]);
+
+        $fileNameToStore = 'temp.jpg (2).png';
+
+        if($request->file('image')){
+            $fileNameWithExt = $request->file('image')->getClientOriginalExtension();
+
+            $fileName = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
+
+            $extension = $request->file('image')->getClientOriginalExtension();
+
+            $fileNameToStore = $fileName . '_' . time() . '.' .$extension;
+
+            $path = $request->file('image')->storeAs('public/pictures',$fileNameToStore);
+        }
+
+
+
+
+        $post = Post::find($id);
+        $post->personId = auth()->user()->id;
+        $post->optionalPic = $fileNameToStore;
+        $post->userName = auth()->user()->userName;
+        $post->title = $request->input('title');
+        $post->textArea = $request->input('description');
+        $post ->save();
+
+
+        return redirect('/contents')->with('success','Post created!');
     }
 
     /**

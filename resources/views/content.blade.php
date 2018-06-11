@@ -4,6 +4,12 @@
     a:hover{
         opacity: 0.65;
     }
+    .postedBy{
+        float: right;
+        font-size: 12px;
+        font-weight: 200;
+        font-family: algerian, courier;
+    }
 </style>
 
 @section('content')
@@ -31,6 +37,9 @@
                                     </div>
 
                                 </div>
+                                <p>
+                                <span  class="postedBy">Posted by {{$post->userName}}</span>
+                                </p>
                             </div>
 
                         @endforeach

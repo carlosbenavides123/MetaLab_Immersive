@@ -51,14 +51,13 @@
                         <li class="nav-item">
 
                             <div class="navbar-nav">
-                                <a href="#" class="nav-link" ><img src="../img/cog.png" alt="Settings"></a>
 
-                                <a href="#" class="nav-link"><img src="../img/personalStats.png" alt=""></a>
+                                <a id = "personal" href="/users/{{Auth::user()->userName}}" class="nav-link"><img src="../img/personalStats.png" alt=""></a>
 
                                 <a class="nav-link" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    <img src="../img/exit.png" alt="Logout">
+                                    <img id = "exit" src="../img/exit.png" alt="Logout">
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
