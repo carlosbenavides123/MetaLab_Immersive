@@ -531,5 +531,36 @@ So in create, I added these requirements, I only want english characters...
             'image' =>'max:1999|image'
         ]);
         
+Ok after struggling I soon found out i needed to update my description requirement to allow null because I ran into problems...
+
+my new migration file for posts is...
+
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('personId');
+            $table->string('optionalPic');
+            $table->string('userName')->required();
+            $table->string('title')->required();
+            $table->string('textArea')->nullable();
+            $table->integer('votes')->default(0);
+            $table->integer('isVisible')->default(1);
+            $table->timestamps();
+        });
         
+        
+  and for PostsController@store I had to update it aswell to allow optional body text..
+  
+  
+          $this->validate($request,[
+            'title'=>'required|min:2|max:50|regex:/(^[A-Za-z0-9 ]+$)+/',
+            'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
+            'image' =>'max:1999|image'
+        ]);
+        
+  Ok we are good now!
+  
+  Now I want the user to be able to edit the posts, for right now without the User Personal page... I'll add that later
+  New commit(6/10/2018)
+  
+  
 
