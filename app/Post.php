@@ -12,7 +12,7 @@ class Post extends Model
 //        return $this->hasMany('App\Content');
 //    }
 
-//    public function user(){
-//        return $this->belongsTo('App\User');
-//    }
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

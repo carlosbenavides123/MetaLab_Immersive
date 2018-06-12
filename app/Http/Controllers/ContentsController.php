@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Content;
 use App\Post;
+use App\User;
 
 class ContentsController extends Controller
 {
@@ -20,8 +21,19 @@ class ContentsController extends Controller
 
     public function index()
     {
+//        public function posts(){
+//        return $this->hasMany('App\Post','personId');
+//    }
+//        $userId = Auth::id();
+//        $userId = User::find($userId);
+//        $personal = User::with('Personal')->get();
+//        return view('user.details')->with('personal',$personal);
+
         $posts = Post::all()->where('isVisible',1);
         return view('content')->with('posts',$posts);
+
+//        $posts = User::with('Posts')->where('personId')->where('isVisible',1);
+//        return view('content')->with('posts',$posts);
     }
 
     /**

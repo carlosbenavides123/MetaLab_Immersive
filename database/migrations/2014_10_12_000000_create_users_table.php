@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('admin',3)->default('no');
             $table->string('master',3)->default('no');
-            $table->integer('likes')->default(0);
             $table->integer('isBanned')->default(0)->length(1);
             $table->rememberToken();
             $table->timestamps();

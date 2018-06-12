@@ -10,7 +10,20 @@
         font-weight: 200;
         font-family: algerian, courier;
     }
+    .upvote:hover{
+        background-color:#E0E0E0;
+    }
+    .downvote:hover{
+        background-color:#E0E0E0;
+    }
 </style>
+
+{{--<script--}}
+        {{--src="https://code.jquery.com/jquery-3.3.1.min.js"--}}
+        {{--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
+        {{--crossorigin="anonymous"></script>--}}
+
+{{--<script src="js/vote.js"></script>--}}
 
 @section('content')
                 <h3 class="text-center">Discussions</h3>
@@ -23,9 +36,9 @@
                                 <div class="row" >
 
                                     <div style="display: inline-grid; margin: 0px 25px 0px 25px;">
-                                        <span><img src="img/upvote.png" alt=""></span>
-                                        <span class="text-center">{{$post->votes}}</span>
-                                        <span><img src="img/downvote.png" style="font-size: 22px;" alt="Number"></span>
+                                        <span><img id="{{$post->id}}" class="upvote" src="img/upvote.png" alt=""></span>
+                                        <span id="$post->votes" class="text-center">{{$post->votes}}</span>
+                                        <span><img id="{{$post->id}}" class="downvote" src="img/downvote.png" style="font-size: 22px;" alt="Number"></span>
                                     </div>
 
                                     <div>
