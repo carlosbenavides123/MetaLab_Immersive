@@ -721,4 +721,73 @@ if you couldn't compile it in you head...(lol)
 
 so everything works, the postscontroller@update is BASICALLY the same as store, but we have to find that certain post first, then we update it, we DONT make a new post (Main difference!)
 
+### Exploring one to one...
+
+I wanted to explore one to one relationships for impact and wow I wenth through hell.
+
+I created a new model called Personal, that keeps track of the personal stuff of the user.
+
+It never occured to me there had to be a table already created in the new table for Personal, that is personals.
+
+After googling I eventually found out that I had to put this... Also I am using UserController because I thought it was most appropiate.
+
+    use Illuminate\Http\Request;
+    use App\User;
+    use App\Post;
+    use Auth;
+    use App\Personal;
+    use Illuminate\Support\Facades\DB;
+
+    class UserController extends Controller
+    {
+        public function index()
+        {
+            return "Something went wrong :P";
+        }
+
+        public function show($id)
+        {
+
+            if($user = Auth::check()){
+                $userId = Auth::id();
+                $userId = User::find($userId);
+                $personal = User::with('Personal')->get();
+                return view('user.details')->with('personal',$personal);
+            }
+            else{
+                return redirect('auth/login');
+            }
+        }
+
+        public function create()
+        {
+            $check = DB::table('personals')
+                ->where('user_id', '=', Auth::user()->id)->first();
+            if(is_null($check)) {
+                return view('user.create');
+            }
+            return 'yes';
+        }
+
+        public function store(Request $request)
+        {
+            $this->validate($request,[
+                'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
+            ]);
+            $userId = Auth::id();
+
+            $personal = New Personal;
+            $personal ->user_id = $userId;
+            $personal ->bio = $request->input('description');
+
+            $personal ->save();
+
+
+            return redirect('/contents')->with('success','Post created!');
+        }
+    }
+
+So I want the user to be able to create ONE instance in that table, hence the one to one but I am goig to put lazy html/blade statements. There will be one button that wil based on that logic, take you to create or edit.
+
+
 
