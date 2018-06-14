@@ -1,53 +1,54 @@
 @extends('layouts.directoryApp')
 
-<style type="text/css">
-    .wrapper {
-        margin-left: 0px;
-        padding-left: 0px;
-    }
-
-</style>
-
 @section('content')
 
 
+    ​<div class="bodyContainer">
+        <div class="profile_left">
 
-    <div class="profile_left">
+            {{$personal->fName}}
+            {{$personal->lName}}'s Profile.
 
-        {{$personal->first()->fName}}
-        {{$personal->first()->lName}}'s Profile.
-        
-        
 
-        @if($personal->first()->personal->optionalPic)
 
-        @else
+            @if($personal->personal->optionalPic)
 
-            <span class="personalPic">
+            @else
+
+                <span class="personalPic">
 
                 <img src="/storage/pictures/defaultpic.png" alt="">
 
             </span>
 
-        @endif
+            @endif
+            total likes {{$personal->personal->likes}}
 
+        </div>
+
+        <div class="container">
+
+            <div class="container text-center">
+                Bio: {{$personal->personal->bio}}
+            </div>
+
+            username: {{$personal->userName}}
+
+            <p></p>
+            id: {{$personal->id}}
+
+            <p></p>
+            <a href="/users/create">Update your profile!</a>
+
+
+        </div>
     </div>
 
 
 
-    total likes {{$personal->first()->personal->likes}}
 
-    <div class="wrapper">
-        
-    </div>
 
-    <div class="container text-center">
-       Bio: {{$personal->first()->personal->bio}}
-    </div>
 
-    username: {{$personal->first()->userName}}
-    <div></div>
 
-    <a href="/users/create">Update your profile!</a>
 
     @stop

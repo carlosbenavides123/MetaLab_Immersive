@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User_Post;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Comment;
 
 class PostsController extends Controller
 {
@@ -66,12 +68,18 @@ class PostsController extends Controller
         $post = new Post;
         $post->personId = auth()->user()->id;
         $post->optionalPic = $fileNameToStore;
-        $post->userName = auth()->user()->userName;
         $post->title = $request->input('title');
         $post->textArea = $request->input('description');
         $post->votes = 0;
 
         $post ->save();
+
+        $user_relation = new User_Post;
+
+        $user_relation->user_id	 = auth()->user()->id;
+        $user_relation->post_id = $post->id;
+
+        $user_relation->save();
 
 
         return redirect('/contents')->with('success','Post created!');
@@ -86,8 +94,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+//        $posts = Comment::with('posts')->get();
         //might need to do a many to many relationship with users
-        $post = Post::find($id);
+        $post = Post::with('comments')->find($id);
         return view('posts.show')->with('post',$post);
     }
 
@@ -100,6 +109,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
         return view('posts.editPosts')->with('post',$post);
     }
 
@@ -138,7 +148,6 @@ class PostsController extends Controller
         $post = Post::find($id);
         $post->personId = auth()->user()->id;
         $post->optionalPic = $fileNameToStore;
-        $post->userName = auth()->user()->userName;
         $post->title = $request->input('title');
         $post->textArea = $request->input('description');
         $post ->save();

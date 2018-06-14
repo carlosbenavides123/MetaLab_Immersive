@@ -51,7 +51,6 @@
                         <li class="nav-item">
 
                             <div class="navbar-nav">
-                                <a href="#" class="nav-link" ><img src="img/cog.png" alt="Settings"></a>
                                 <a href="/users/{{Auth::user()->userName}}" class="nav-link"><img src="img/personalStats.png" alt=""></a>
 
                                 <a class="nav-link" href="{{ route('logout') }}"

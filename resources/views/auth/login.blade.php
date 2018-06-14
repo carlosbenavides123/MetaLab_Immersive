@@ -19,7 +19,7 @@
                                 <img src="img/login.png" id="person" alt=""></label>
 
                             <div class="col-md-6">
-                                <input style="color:#fff; border: 2px solid #fff; opacity: 1.2;" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input style="color:#000; background-color: rgb(255, 255, 255,0.5); border: 2px solid #fff; opacity: 1.2;" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
 
                                 @if ($errors->has('email'))

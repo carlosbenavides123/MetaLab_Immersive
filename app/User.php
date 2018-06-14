@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fName', 'lName','userName', 'email', 'phone','password'
+        'fName', 'lName', 'userName', 'email', 'phone', 'password'
     ];
 
     public function personal()
@@ -31,8 +31,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function posts(){
-        return $this->hasMany('App\Post','id');
-    }
 }

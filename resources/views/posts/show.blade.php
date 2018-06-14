@@ -11,20 +11,34 @@
     }
     body {
         font-family: 'Raleway', sans-serif;
+        background-color: lightblue;
     }
 
-    a:hover{
-        opacity: 0.8;
+    #create:hover{
+        background-color: rgb(0,123,255,0.75);
+        border-color: rgb(0,123,255,0.75);
+    }
+    textarea{
+        width: 400px;
+        height: 100px;
+        border: #D3D3D3 2.5px solid;
+        background-color: #fff;
     }
 </style>
 
 @section('content')
 
+    @foreach (['danger', 'warning', 'success', 'info'] as $key)
+        @if(Session::has($key))
+            <p class="alert alert-{{ $key }}">{{ Session::get($key) }}</p>
+        @endif
+    @endforeach
+
     <div class="row">
         <div class="col-md-8 col-sm-12" >
 
 
-                <div class="card card-body" style="margin-left: 2.5%;">
+                <div class="card card-body" style="margin:0 2.5% 0 2.5%;">
                     <div class="row" >
 
                         <div style="display: inline-grid; margin: 0px 25px 0px 25px;">
@@ -61,6 +75,7 @@
 
 
                 </div>
+            <hr style="border-top: 2px solid #ccc;margin: 1em 0; padding: 0; ">
 
 
 
@@ -68,11 +83,11 @@
 
         <div class="col-md-4">
 
-            <div class="card card-block bg-faded" style="margin-right: 2.5%; padding:2.5% 2.5% 2.5% 2.5%">
+            <div class="card card-block bg-faded" style="margin:0 2.5% 0 2.5%; padding:2.5% 2.5% 2.5% 2.5%">
                 <div class="container">
                     <p></p>
 
-                    <a href="/posts/create" class="btn btn-primary" style="  margin:0 auto;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align : center;-moz-box-align    : center;-ms-flex-align    : center;-webkit-align-items : center;align-items : center ;justify-content : center;-webkit-justify-content : center;-webkit-box-pack : center;-moz-box-pack : center;-ms-flex-pack : center;">Create a new discussion!</a>
+                    <a href="/posts/create" class="btn btn-primary" id="create" style="  margin:0 auto;  display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-box-align : center;-moz-box-align    : center;-ms-flex-align    : center;-webkit-align-items : center;align-items : center ;justify-content : center;-webkit-justify-content : center;-webkit-box-pack : center;-moz-box-pack : center;-ms-flex-pack : center;">Create a new discussion!</a>
 
                     <span><p style="margin-top: 2.5%;color:#8dacbb;"> This post was submitted in {{$post->created_at}}.
                         @if($post->created_at != $post->updated_at)
@@ -98,5 +113,60 @@
 
         </div>
 
+
     </div>
+
+
+    <br>
+    <h3>Post a comment</h3>
+    <br>
+
+
+
+    <div style="margin: 0 2.5% 0 2.5%">
+        {!! Form::open(['action' => ['CommentsController@store'],'method'=>'POST']) !!}
+
+
+        {!! Form::textarea('comment', '', ['class' => '', 'placeholder'=>'Leave a comment...', 'required','pattern'=>'^[!?a-zA-Z0-9_ ]*$','minlength'=>'1','style'=>'font-size:20px; ', 'id'=>'comment' ]) !!}
+
+        @if($errors->has('text'))
+            <div class="alert alert-danger">
+                {{$errors->first('text')}}
+            </div>
+        @endif
+        @if(Auth::user())
+        {{ Form::hidden('id', $post->id) }}
+        {{ Form::hidden('personId', Auth::user()->id) }}
+        {{Form ::hidden('userName', Auth::user()->userName)}}
+        <p></p>
+        @endif
+        <div>
+        {!! Form::submit('Submit', ['class' => 'btn btn-success','style'=>'margin-top:5px;']) !!}
+        </div>
+
+
+
+    </div>
+
+    <div class="container">
+
+        @foreach($post->comments as $comment)
+            <!-- SECOND CARD -->
+                <div class="bg-white border flex-grow justify-between m-6 rounded shadow w-1/3" style="padding: 0.5% 1.5% 0.5% 1%;">
+                    <div class="p-6">
+                       <p><a href="">{{$comment->userName}}</a></p>
+
+                    </div>
+                    <div class="bg-grey-lightest border-t p-6">
+                        <h4 class="pb-2">{{$comment->comment}}</h4>
+                    </div>
+                </div>
+
+
+            <br>
+            @endforeach
+
+    </div>
+
+
     @stop

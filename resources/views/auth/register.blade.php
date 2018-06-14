@@ -1,6 +1,10 @@
 <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
-@extends('layouts.app')
-
+@extends('layouts.contentApp')
+<style>
+    .py-4{
+        background-color: #e1e1e1;
+    }
+</style>
 @section('content')
     <body class="{{ Request::path() == 'register' ? 'background-image-reg' : '' }}"></body>
 <div class="container">
