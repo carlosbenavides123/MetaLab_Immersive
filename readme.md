@@ -789,5 +789,126 @@ After googling I eventually found out that I had to put this... Also I am using 
 
 So I want the user to be able to create ONE instance in that table, hence the one to one but I am goig to put lazy html/blade statements. There will be one button that wil based on that logic, take you to create or edit.
 
+# Oof.. Long time since last info..
+(6/13/2018)
+
+So today I actually wanted to move the optionalPic of the personals migration to the users table because I wanted to update the user's name if they swap names and I want to display the picture next to the person's comment and with their dynamic name if they please to switch it...
+
+So I actually created a three way pivot table to do this...
+![alttext](https://i.imgur.com/rBiI3He.png)
+
+Since I gave myself the requirements to fill above... I thought it would be a good opportunity to learn eager loading...
+
+So the main issue I was finding was the show, it took me long to realize the $id was from the posts table (FailFish) I was orginaally going willy nilly with the relationships and wondering why it didn't work. This is important!!!
 
 
+This is all the logic that the posts for a specific post will be getting...
+
+        public function show($id)
+        {
+            $post = Post::with('comments')->find($id);
+            $user = Post::with('postComments')->find($id);
+            return view('posts.show')->with('post',$post)->with('user',$user);
+        }
+In practical, I would assume people's detail's will be in gifs/start loading when reached or load a few then load more through js...
+
+So the relationships here I learned to make it in the Post Model... took me a long time to figure that one out...
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment','post__comments','post_id','comment_id');
+    }
+
+    public function postComments()
+    {
+        return $this->belongsToMany('App\User','post__comments','post_id','user_id');
+    }
+    
+I eventualy came up with this...
+
+Basically I want all the comments where the pivot table gets the post_id which is the link we click on, and give us all the comment's that map to it. 
+
+And the same for users.
+
+So How did i write this logic...
+
+For the Post-Comment Relationship... (the first one the comments())
+
+    //    I didn't want to use __construct because it kept redirecting non-logged in users to index
+    //    I don't plan to have a index page for comments....
+
+    //    public function __construct()
+    //    {
+    //        $this->middleware('auth');
+    //    }
+
+        public function store(Request $request)
+        {
+            if (!Auth::check()) {
+                return redirect()->back()->with('danger','Please be logged in to post...');
+            }
+            else {
+                $this->validate($request, [
+                    'comment' => 'regex:/(^[a-zA-Z0-9 "\'!?.-]+$)+/|min:1',
+                ]);
+                $comment = new Comment;
+
+                $comment->post_id=$request->id;
+                $comment->user_id=$request->personId;
+                $comment->comment = $request->comment;
+
+                //dynamic username change I guess..
+
+                $comment->userName = $request->userName;
+                $comment->save();
+
+                $relation = new Post_Comment;
+
+                $relation->post_id = $request->id;
+                $relation->comment_id = $comment->id;
+                $relation->user_id = $request->personId;
+                $relation->save();
+
+
+            return redirect()->back();
+            }
+        }
+
+Basically, the comment thing is a form, that has these hidden fields which are self explanatory... Making the comment is straight forward. But the important relationship here is the $relation. 
+
+We create a new instance of Post_Comment; we get the post_id from the hidden, the comment id from above, and user id through auth() or hidden field. then save, this is cool because it was a lot easier to implement that i thought! And super useful for things like this.
+
+Ok for the Post->User that posted comments, 
+This was tricky, I figured out that the model, Post::User was saying that ok give me the post and the user id 
+
+        public function postComments()
+        {
+            return $this->belongsToMany('App\User','post__comments','post_id','user_id');
+        }
+        
+ For some reason, I was putting in post_id and comment_id, then the reverse, and the most part I tried User::Post which was my MAIN MISTAKE, I should've thought about this before writing code. It is straight forward now because we are saying ok get the post id, and get the users who posted on this . The caveat is that we get the original poster info aswell, which isn't bad, but it can be useless.
+ 
+ Ok so it is actually worth noting that inside blade, that same function where u made the function for relationship is still present here. like since we are going to post with comments, we need to specificy ok, go to $post->comments (function name) then we can extrance anything from comments table. 
+ 
+ It is also worth noting that $post is just a variable. 
+ 
+ '$post -> comments -> comment '
+
+'variable (Post model) -> function (From Post model) 
+ 
+ Forexample, like how i said that $user, we need to go to Post model and go to the function that relates Posts:with users, in respect to comments...
+ 
+ so it looks like $user (variable passed in) - > postComments() (function) now we can get anything from users table
+ 
+ '$user -> postComments -> userName' for example...
+ 
+ And in the blade, since we are going to have two dynamic data, its gonna look ugly like this...
+
+             @foreach($user->postComments as $index => $person)
+                {{$person->userName}}
+                {{$post->comments[$index]->comment}} {{-- This is your $value --}}
+            @endforeach
+            
+            I'll style this tommarow and post pic...
+ 
+ ## This is actually all similar to my hasMany relationship
