@@ -6,6 +6,7 @@ use App\User_Post;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -43,8 +44,8 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'title'=>'required|min:2|max:50|regex:/(^[A-Za-z0-9 ]+$)+/',
-            'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
+            'title'=>'required|min:2|max:200|regex:/^[a-zA-Z0-9 \'"!?.,-]+$/',
+            'description'=>'nullable|regex:/(^[A-Za-z0-9.,\'"!? ]+$)+/|min:1',
             'image' =>'max:1999|image'
         ]);
 
@@ -94,10 +95,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-//        $posts = Comment::with('posts')->get();
-        //might need to do a many to many relationship with users
         $post = Post::with('comments')->find($id);
-        return view('posts.show')->with('post',$post);
+        $user = Post::with('postComments')->find($id);
+        return view('posts.show')->with('post',$post)->with('user',$user);
     }
 
     /**
@@ -109,7 +109,6 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-
         return view('posts.editPosts')->with('post',$post);
     }
 
@@ -142,9 +141,6 @@ class PostsController extends Controller
             $path = $request->file('image')->storeAs('public/pictures',$fileNameToStore);
         }
 
-
-
-
         $post = Post::find($id);
         $post->personId = auth()->user()->id;
         $post->optionalPic = $fileNameToStore;
@@ -165,5 +161,10 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function vote($id)
+    {
+        return 123;
     }
 }

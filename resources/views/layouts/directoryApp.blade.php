@@ -51,8 +51,11 @@
                         <li class="nav-item">
 
                             <div class="navbar-nav">
+                                @if(Auth::user()->role=='admin')
+                                    <a href="/admin" class="nav-link"><img src="../img/admin.png" alt="Admin Room"></a>
+                                @endif
 
-                                <a id = "personal" href="/users/{{Auth::user()->userName}}" class="nav-link"><img src="../img/personalStats.png" alt=""></a>
+                                <a id = "personal" href="/users/{{Auth::user()->id}}" class="nav-link"><img src="../img/personalStats.png" alt=""></a>
 
                                 <a class="nav-link" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();

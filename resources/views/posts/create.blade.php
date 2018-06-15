@@ -38,7 +38,7 @@
 
         <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
 
-            {{Form::bsText('title', old('title'),['placeholder'=>'Title','required','pattern'=>'^[!?a-zA-Z0-9_ ]*$','minlength'=>'2','style'=>'font-size:26px;']) }}
+            {{Form::bsText('title', old('title'),['placeholder'=>'Title','required','pattern'=>"^[a-zA-Z0-9 '\"!?.,-]+$",'minlength'=>'2','style'=>'font-size:26px;']) }}
             @if($errors->has('title'))
                 <div class="alert alert-danger">
                     {{$errors->first('title')}}
@@ -49,7 +49,7 @@
         <br>
 
         <div class="card card-body" style="padding: 1.5% 1.5% 1.5% 1.5%;background:#cee3f8;">
-            {{Form::bsTextarea('description',old('description'),['placeholder'=>'Optional description','pattern'=>'^[!?a-zA-Z0-9_ ]*$','style'=>'font-size:26px;' ]) }}
+            {{Form::bsTextarea('description',old('description'),['placeholder'=>'Optional description','pattern'=>'^[a-zA-Z0-9 \'"!?.,-]+$','style'=>'font-size:26px;' ]) }}
             @if($errors->has('description'))
                 <div class="alert alert-danger">
                     {{$errors->first('description')}}

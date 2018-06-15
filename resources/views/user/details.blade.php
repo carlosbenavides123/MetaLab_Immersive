@@ -29,7 +29,12 @@
         <div class="container">
 
             <div class="container text-center">
+                @if($personal->personal->bio==null)
+                    Bio: Empty!
+
+                @else
                 Bio: {{$personal->personal->bio}}
+                @endif
             </div>
 
             username: {{$personal->userName}}

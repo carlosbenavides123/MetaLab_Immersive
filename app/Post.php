@@ -19,4 +19,9 @@ class Post extends Model
         return $this->belongsToMany('App\Comment','post__comments','post_id','comment_id');
     }
 
+    public function postComments()
+    {
+        return $this->belongsToMany('App\User','post__comments','post_id','user_id');
+    }
+
 }

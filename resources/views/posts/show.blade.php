@@ -6,8 +6,8 @@
         margin-left: auto;
         margin-right: auto;
         width: 60%;
-        min-width: 400px;
-        min-height: 400px;
+        max-width: 60%;
+
     }
     body {
         font-family: 'Raleway', sans-serif;
@@ -24,11 +24,23 @@
         border: #D3D3D3 2.5px solid;
         background-color: #fff;
     }
+    #up:hover{
+        background-color: #d3d9df;
+    }
+    #down:hover{
+        background-color: #d3d9df;
+    }
+
 </style>
 
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="../js/vote.js"></script>
 @section('content')
 
-    @foreach (['danger', 'warning', 'success', 'info'] as $key)
+    @foreach (['danger', 'success'] as $key)
         @if(Session::has($key))
             <p class="alert alert-{{ $key }}">{{ Session::get($key) }}</p>
         @endif
@@ -41,10 +53,20 @@
                 <div class="card card-body" style="margin:0 2.5% 0 2.5%;">
                     <div class="row" >
 
+                        {{--Lazy method without AJAX--}}
+                        {{--Does not require login because I am dumb--}}
+
                         <div style="display: inline-grid; margin: 0px 25px 0px 25px;">
-                            <span><img src="../img/upvote.png" alt=""></span>
+                            {!! Form::open(['action' => ['Vote@upvote',$post->id],'method'=>'POST']) !!}
+                            <span id="upSpan"><input type="image" src="../img/upvote.png" id="up" alt=""></span>
+                            {!! Form::close() !!}
+
                             <span class="text-center">{{$post->votes}}</span>
-                            <span><img src="../img/downvote.png" style="font-size: 22px;" alt="Number"></span>
+
+                            {!! Form::open(['action' => ['Vote@downvote',$post->id],'method'=>'POST']) !!}
+                            <span id="downSpan"><input type="image" src="../img/downvote.png" id="down" style="font-size: 22px;" alt="Number"></span>
+                            {!! Form::close() !!}
+
                         </div>
 
                         <div>
@@ -118,12 +140,13 @@
 
 
     <br>
-    <h3>Post a comment</h3>
-    <br>
+
 
 
 
     <div style="margin: 0 2.5% 0 2.5%">
+        <h3>Post a comment</h3>
+        <br>
         {!! Form::open(['action' => ['CommentsController@store'],'method'=>'POST']) !!}
 
 
@@ -142,31 +165,59 @@
         @endif
         <div>
         {!! Form::submit('Submit', ['class' => 'btn btn-success','style'=>'margin-top:5px;']) !!}
+            {!! Form::close() !!}
+        </div>
+
+        <p></p>
+
+        <div class="container float-left">
+
+        @foreach($user->postComments as $index => $person)
+                <div class="bg-white border flex-grow justify-between m-6 rounded shadow w-1/3" style="padding: 0.5% 1.5% 0.5% 1%;">
+                    <div class="p-6">
+                    <p><a href="../users/{{$person->id}}">{{$person->userName}}</a></p>
+
+                    </div>
+
+                    <div class="bg-grey-lightest border-t p-6">
+                    <h4 class="pb-2">{{$post->comments[$index]->comment}}</h4>
+                        @if($post->comments[$index]->comment)
+
+                        @if(Auth::check())
+                            @if(Auth::user()->id == $person->id)
+                                <a href="">Edit</a>
+                            @endif
+                            @if (Auth::user()->id == $person->id or Auth::user()->role=='admin')
+                                <span>
+                                    {!! Form::open([ 'action' => ['CommentsController@destroy',$post->comments[$index]->id], 'method'=>'POST' ] ) !!}
+                                    {{ Form::hidden('_method','DELETE') }}
+                                    {{Form::Submit('Delete',['class' => 'btn btn-danger'])}}
+
+                                    {!! Form::close() !!}
+                                </span>
+                                @endif
+                                @endif
+                        @endif
+                    </div>
+                </div>
+                <br>
+        @endforeach
+
+
+
         </div>
 
 
-
-    </div>
-
-    <div class="container">
-
-        @foreach($post->comments as $comment)
-            <!-- SECOND CARD -->
-                <div class="bg-white border flex-grow justify-between m-6 rounded shadow w-1/3" style="padding: 0.5% 1.5% 0.5% 1%;">
-                    <div class="p-6">
-                       <p><a href="">{{$comment->userName}}</a></p>
-
-                    </div>
-                    <div class="bg-grey-lightest border-t p-6">
-                        <h4 class="pb-2">{{$comment->comment}}</h4>
-                    </div>
-                </div>
+</div>
+<div></div>
+<div></div>
+<div></div>
+<div>
 
 
-            <br>
-            @endforeach
-
-    </div>
+</div>
 
 
-    @stop
+
+
+@stop

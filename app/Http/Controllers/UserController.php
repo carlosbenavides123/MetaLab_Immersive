@@ -16,18 +16,28 @@ class UserController extends Controller
         return "Something went wrong :P";
     }
 
-    public function show()
+    public function show($id)
     {
-        //I wanted to explore this method
-        //I know its unpractical to force users to submit a bio
-        //But this is all for practice
+        //maybe delete
+//        //I wanted to explore this method
+//        //I know its unpractical to force users to submit a bio
+//        //But this is all for practice
+//
+//        $check = DB::table('personals')
+//            ->where('user_id', '=',$id)->first();
+//
+//        //I know this is an ugly way, but I kinda wanted to do it this way...
+//        //Its not a bug or lazy programming, its a feature !!! /s
+//
+//        if(is_null($check)) {
+//            if(!Auth::check() or Auth::user()->id != $id)
+//            {
+//                return redirect()->back()->with('danger','That user does not have a personal account yet...');
+//            }
+//            return view('user.create');
+//        }
 
-        $check = DB::table('personals')
-            ->where('user_id', '=', Auth::user()->id)->first();
-        if(is_null($check)) {
-            return view('user.create');
-        }
-        $personal = User::with('personal')->find(Auth::user()->id);
+        $personal = User::with('personal')->find($id);
         return view('user.details')->with('personal',$personal);
     }
 
@@ -39,19 +49,20 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
-        ]);
-        $userId = Auth::id();
-
-        $personal = New Personal;
-        $personal ->user_id = $userId;
-        $personal ->bio = $request->input('description');
-
-        $personal ->save();
-
-
-        return redirect('/contents')->with('success','Post created!');
+//        {--Maybe delete--}
+//        $this->validate($request,[
+//            'description'=>'nullable|regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
+//        ]);
+//        $userId = Auth::id();
+//
+//        $personal = New Personal;
+//        $personal ->user_id = $userId;
+//        $personal ->bio = $request->input('description');
+//
+//        $personal ->save();
+//
+//
+//        return redirect('/contents')->with('success','Post created!');
     }
 
     public function update(Request $request, $id)

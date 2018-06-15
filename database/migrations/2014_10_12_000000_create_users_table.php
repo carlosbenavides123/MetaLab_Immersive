@@ -21,9 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('admin',3)->default('no');
-            $table->string('master',3)->default('no');
-            $table->integer('isBanned')->default(0)->length(1);
+            $table->string('optionalPic')->nullable();
+            $table->string('role',10)->default('no');
             $table->rememberToken();
             $table->timestamps();
         });

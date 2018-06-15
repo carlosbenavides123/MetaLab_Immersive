@@ -1,9 +1,9 @@
 $(document).ready(function(){
-    $("img").click(function(event) {
-        //alert(event.target.id+" and "+$(event.target).attr('class'));
-        if(event.target.attr('class') === "upvote")
-        {
-            // $post->votes +=1;
-        }
+    $("#frm-id").submit(function(){
+        var form_data =  $("#frm-id").serialize();
+        $.ajax({
+            url: 'PostsController@vote',
+            type: "POST"
+        });
     });
 });

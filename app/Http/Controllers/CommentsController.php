@@ -25,7 +25,7 @@ class CommentsController extends Controller
         }
         else {
             $this->validate($request, [
-                'comment' => 'regex:/(^[A-Za-z0-9 ]+$)+/|min:1',
+                'comment' => 'regex:/(^[a-zA-Z0-9 "\'!?.-]+$)+/|min:1',
             ]);
             $comment = new Comment;
 
@@ -47,6 +47,20 @@ class CommentsController extends Controller
 
 
         return redirect()->back();
+        }
+    }
+
+    public function destroy($id)
+    {
+        //this check cause I am an unconfident person
+
+        if (!Auth::check()) {
+            return redirect()->back()->with('danger','Please be logged in to post...');
+        }
+        else {
+            $comment = Comment::find($id);
+            $comment->delete();
+            return $id;
         }
     }
 }

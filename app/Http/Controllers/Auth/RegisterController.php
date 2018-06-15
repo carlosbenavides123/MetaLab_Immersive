@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Personal;
 
 class RegisterController extends Controller
 {
@@ -53,6 +54,7 @@ class RegisterController extends Controller
             'lName' => 'required|string|max:32',
             'email' => 'required|string|email|max:255|unique:users',
             'userName' => 'required|string|unique:users|max:25',
+            'optionalPic' => 'image|max:1999|null',
             'phone'  => 'phone:US,BE|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -66,14 +68,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = new User();
+
+        $user= User::create([
             'fName' => $data['fName'],
             'lName' => $data['lName'],
             'userName' => $data['userName'],
+            'optionalPic' => null,
             'email' => $data['email'],
             'phone' => $data['phone'],
 
             'password' => Hash::make($data['password']),
         ]);
+        $user->save();
+
+        $personal = New Personal;
+        $personal ->user_id = $user->id;
+        $personal ->bio =null;
+
+        $personal ->save();
+
+        return $user;
     }
 }

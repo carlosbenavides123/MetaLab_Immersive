@@ -17,7 +17,6 @@ class CreatePersonalsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('likes')->default(0);
-            $table->string('optionalPic')->nullable();
             $table->text('bio')->nullable();
             $table->timestamps();
         });
